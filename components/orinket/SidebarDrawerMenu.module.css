@@ -1,0 +1,381 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: rgba(0, 0, 0, 0);
+  pointer-events: none;
+  transition: background 0.28s ease;
+}
+
+.overlayOpen {
+  background: rgba(0, 0, 0, 0.52);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.drawer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: min(88vw, 420px);
+  height: 100%;
+  background: #ffffff;
+  color: #1b1b1b;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.32s ease;
+  box-shadow: 20px 0 46px rgba(0, 0, 0, 0.22);
+}
+
+.drawerOpen {
+  transform: translateX(0);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid #ececec;
+}
+
+.logo {
+  font-size: 1.62rem;
+  font-weight: 600;
+  letter-spacing: 0.24rem;
+  text-transform: uppercase;
+}
+
+.closeBtn {
+  border: 0;
+  background: transparent;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.userStrip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: 1px solid #ececec;
+  background: #fafafa;
+}
+
+.userAvatar {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #f0e8d8;
+  color: #8a6a2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 1px solid #ddd0b0;
+}
+
+.userInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1b1b1b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userEmail {
+  font-size: 0.75rem;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.signOutBtn {
+  flex-shrink: 0;
+  border: 0;
+  background: transparent;
+  color: #c0392b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+.signOutBtn:hover {
+  background: #fdecea;
+}
+
+.signInLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #1b1b1b;
+  text-decoration: none;
+  border-bottom: 1px solid #ececec;
+  background: #fafafa;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+.signInLink:hover {
+  background: #f0e8d8;
+}
+
+.tabRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #f3f3f3;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.tabButton {
+  border: 0;
+  background: transparent;
+  padding: 12px 8px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #2a2a2a;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.tabActive {
+  border-bottom-color: #1f1f1f;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 14px;
+}
+
+.sectionBlock {
+  padding: 0 12px 8px;
+}
+
+.sectionTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 2px;
+  border-bottom: 1px solid #ededed;
+}
+
+.sectionToggleButton {
+  width: 100%;
+  border: 0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 2px;
+  border-bottom: 1px solid #ededed;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 1.04rem;
+  font-weight: 500;
+}
+
+.sectionIcon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding-top: 12px;
+}
+
+.categoryCard {
+  min-height: 70px;
+  background: #f6f6f6;
+  border: 1px solid #f0f0f0;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 10px 10px 12px;
+}
+
+.categoryCardSkeleton {
+  min-height: 70px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #efefef 25%, #f8f8f8 40%, #efefef 65%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.1s linear infinite;
+}
+
+.categoryName {
+  font-size: 0.95rem;
+  line-height: 1.2;
+  font-weight: 500;
+  max-width: 63%;
+}
+
+.categoryImage {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.imagePlaceholder {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #ececec;
+}
+
+.emptyText {
+  margin-top: 12px;
+  padding: 10px;
+  background: #fafafa;
+  border: 1px solid #eeeeee;
+  color: #666666;
+  font-size: 0.9rem;
+}
+
+.viewAllWrap {
+  text-align: center;
+  margin: 2px 0 10px;
+}
+
+.viewAllLink {
+  color: #1f1f1f;
+  font-size: 0.95rem;
+  text-underline-offset: 2px;
+}
+
+.accordionList {
+  border-top: 1px solid #ececec;
+}
+
+.accordionItem {
+  border-bottom: 1px solid #ececec;
+}
+
+.accordionHeader {
+  width: 100%;
+  border: 0;
+  background: #ffffff;
+  padding: 14px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.05rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+}
+
+.toggleIcon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.accordionBody {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.26s ease, opacity 0.26s ease;
+  opacity: 0;
+}
+
+.accordionBodyOpen {
+  max-height: 240px;
+  opacity: 1;
+  padding-bottom: 16px;
+}
+
+.accordionBodyLarge.accordionBodyOpen {
+  max-height: 980px;
+}
+
+.accordionLinks {
+  padding: 0 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.accordionLink {
+  color: #3a3a3a;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.accordionPlaceholder {
+  margin: 0;
+  padding: 0 12px 12px;
+  color: #6a6a6a;
+  font-size: 0.9rem;
+}
+
+.footer {
+  border-top: 1px solid #ececec;
+  background: #f7f7f7;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.footerLink {
+  text-decoration: none;
+  color: #1f1f1f;
+  text-transform: uppercase;
+  font-size: 0.73rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 13px 8px;
+  border-right: 1px solid #dfdfdf;
+}
+
+.footerLink:last-child {
+  border-right: 0;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  .overlay {
+    display: none;
+  }
+}

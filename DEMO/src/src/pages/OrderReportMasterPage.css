@@ -1,0 +1,263 @@
+/* Order Report — SaaS-style layout */
+.ork-report-page {
+  --ork-accent: #16a34a;
+  --ork-card-radius: 14px;
+  --ork-border: #e8ecf1;
+  --ork-muted: #64748b;
+  --ork-heading: #0f172a;
+}
+
+.ork-report-breadcrumb {
+  font-size: 0.8125rem;
+  color: var(--ork-muted);
+  margin-bottom: 0.35rem;
+}
+.ork-report-breadcrumb a {
+  color: var(--ork-muted);
+  text-decoration: none;
+}
+.ork-report-breadcrumb a:hover {
+  color: var(--ork-accent);
+}
+
+.ork-report-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--ork-heading);
+  letter-spacing: -0.02em;
+}
+
+/* KPI row — six cards in one line; horizontal scroll on narrow viewports */
+.ork-kpi-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.ork-kpi-grid::-webkit-scrollbar {
+  height: 6px;
+}
+.ork-kpi-grid::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.ork-kpi-card {
+  flex: 1 1 0;
+  min-width: 9rem;
+  background: #fff;
+  border: 1px solid var(--ork-border);
+  border-radius: var(--ork-card-radius);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
+  transition: box-shadow 0.15s ease;
+}
+
+.ork-kpi-card:hover {
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+}
+
+.ork-kpi-card-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.85rem 0.75rem;
+}
+
+.ork-kpi-card--profit {
+  border-top: 3px solid #16a34a;
+}
+.ork-kpi-card--loss {
+  border-top: 3px solid #dc2626;
+}
+.ork-kpi-card--gross {
+  border-top: 3px solid #2563eb;
+}
+.ork-kpi-card--pending {
+  border-top: 3px solid #d97706;
+}
+.ork-kpi-card--avg {
+  border-top: 3px solid #7c3aed;
+}
+.ork-kpi-card--split {
+  border-top: 3px solid #0d9488;
+}
+
+.ork-kpi-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.ork-kpi-icon--loss {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.ork-kpi-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ork-kpi-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ork-muted);
+  margin-bottom: 0.3rem;
+}
+
+.ork-kpi-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ork-heading);
+  line-height: 1.15;
+  word-break: break-word;
+}
+
+.ork-kpi-value--sm {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.ork-kpi-card--profit .ork-kpi-value {
+  color: #15803d;
+}
+.ork-kpi-card--loss .ork-kpi-value {
+  color: #b91c1c;
+}
+.ork-kpi-card--gross .ork-kpi-value {
+  color: #1d4ed8;
+}
+.ork-kpi-card--pending .ork-kpi-value {
+  color: #b45309;
+}
+.ork-kpi-card--avg .ork-kpi-value {
+  color: #6d28d9;
+}
+.ork-kpi-card--split .ork-kpi-value {
+  color: #0f766e;
+}
+
+.ork-header-actions {
+  flex-shrink: 0;
+}
+
+.ork-header-report-select {
+  width: auto;
+  min-width: 9.5rem;
+  max-width: 12rem;
+}
+
+.ork-header-search {
+  width: 10rem;
+  min-width: 8rem;
+  max-width: 14rem;
+}
+
+@media (min-width: 1200px) {
+  .ork-header-search {
+    width: 12rem;
+  }
+}
+
+.ork-report-panel {
+  background: #fff;
+  border: 1px solid var(--ork-border);
+  border-radius: var(--ork-card-radius);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ork-table-wrap {
+  overflow: auto;
+  flex: 1;
+  min-height: 200px;
+}
+
+.ork-data-table {
+  font-size: 0.8125rem;
+}
+
+.ork-data-table thead th {
+  background: #f8fafc;
+  color: var(--ork-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--ork-border);
+  white-space: nowrap;
+}
+
+.ork-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+}
+
+.ork-pagination-bar {
+  padding: 0.65rem 1rem;
+  border-top: 1px solid var(--ork-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--ork-muted);
+}
+
+/* PDF preview modal */
+.ork-pdf-modal .rs-modal-body {
+  max-height: min(70vh, 560px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ork-pdf-preview-wrap {
+  max-height: 52vh;
+  background: #fafbfc;
+}
+
+.ork-pdf-preview-wrap .ork-data-table {
+  margin: 0;
+}
+
+/* Order report filter — align with DrawerRsuite / FilterRightSidebar body */
+.ork-order-report-filter-drawer .rs-drawer-body,
+.ork-order-report-filter-body.rs-drawer-body {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.ork-sparkline {
+  flex-shrink: 0;
+  opacity: 0.95;
+}

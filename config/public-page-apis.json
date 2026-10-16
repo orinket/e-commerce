@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "pages": [
+    {
+      "id": "home",
+      "when": { "type": "exact", "path": "/" },
+      "calls": [
+        {
+          "resource": "categories",
+          "searchtext": "",
+          "skipIfLoaded": false,
+          "paginationinfo": {
+            "pageno": 1,
+            "pagelimit": 200,
+            "filter": {},
+            "sort": { },
+            "projection": {}
+          }
+        },
+        {
+          "resource": "subcategories",
+          "searchtext": "",
+          "skipIfLoaded": false,
+          "paginationinfo": {
+            "pageno": 1,
+            "pagelimit": 500,
+            "filter": {},
+            "sort": { },
+            "projection": {}
+          }
+        },
+        {
+          "resource": "products",
+          "searchtext": "",
+          "skipIfLoaded": false,
+          "paginationinfo": {
+            "pageno": 1,
+            "pagelimit": 500,
+            "filter": {},
+            "sort": { },
+            "projection": {}
+          }
+        }
+      ]
+    },
+    {
+      "id": "category_plp",
+      "when": { "type": "prefix", "path": "/category" },
+      "calls": [
+        {
+          "resource": "categories",
+          "searchtext": "",
+          "skipIfLoaded": true,
+          "paginationinfo": {
+            "pageno": 1,
+            "pagelimit": 200,
+            "filter": {},
+            "sort": { "field": "categoryname", "order": 1 },
+            "projection": {}
+          }
+        },
+        {
+          "resource": "subcategories",
+          "searchtext": "",
+          "skipIfLoaded": true,
+          "paginationinfo": {
+            "pageno": 1,
+            "pagelimit": 500,
+            "filter": {},
+            "sort": { "field": "subcategoryname", "order": 1 },
+            "projection": {}
+          }
+        },
+        {
+          "resource": "products",
+          "searchtext": "",
+          "skipIfLoaded": false,
+          "paginationinfo": {
+            "pageno": 1,
+            "pagelimit": 500,
+            "filter": {},
+            "sort": { "field": "recordinfo.createat", "order": -1 },
+            "projection": {}
+          }
+        }
+      ]
+    },
+    {
+      "id": "fallback_shell",
+      "when": { "type": "catchAll" },
+      "calls": [
+        {
+          "resource": "categories",
+          "searchtext": "",
+          "skipIfLoaded": true,
+          "paginationinfo": {
+            "pageno": 1,
+            "pagelimit": 200,
+            "filter": {},
+            "sort": { "field": "categoryname", "order": 1 },
+            "projection": {}
+          }
+        },
+        {
+          "resource": "subcategories",
+          "searchtext": "",
+          "skipIfLoaded": true,
+          "paginationinfo": {
+            "pageno": 1,
+            "pagelimit": 200,
+            "filter": {},
+            "sort": { "field": "subcategoryname", "order": 1 },
+            "projection": {}
+          }
+        },
+        {
+          "resource": "products",
+          "searchtext": "",
+          "skipIfLoaded": true,
+          "paginationinfo": {
+            "pageno": 1,
+            "pagelimit": 500,
+            "filter": {},
+            "sort": { "field": "recordinfo.createat", "order": -1 },
+            "projection": {}
+          }
+        }
+      ]
+    }
+  ]
+}
