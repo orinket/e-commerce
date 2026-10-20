@@ -7,7 +7,7 @@ import { fonts } from "@/lib/fonts"
 
 interface ProductVideoAnd360Props {
   product: Product
-  galleryImages: string[]
+  galleryImages?: string[]
 }
 
 export default function ProductVideoAnd360({

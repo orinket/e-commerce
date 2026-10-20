@@ -1,8 +1,11 @@
-/** Strip trailing `/api` so callers can keep using `${origin}/api/...`. */
+/** Strip trailing `/api` and ensure protocol so callers can keep using `${origin}/api/...`. */
 function normalizeBackendOrigin(raw: string): string {
   let s = raw.trim().replace(/\/+$/, "")
   if (s.endsWith("/api")) {
     s = s.slice(0, -4).replace(/\/+$/, "")
+  }
+  if (s && !s.startsWith("http://") && !s.startsWith("https://")) {
+    s = `https://${s}`
   }
   return s
 }

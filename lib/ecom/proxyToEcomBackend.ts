@@ -4,7 +4,7 @@ import { resolveOrinketBackendOrigin } from "@/lib/publicApi/server/resolveBacke
 export async function proxyEcom(
   req: Request,
   backendPath: string,
-  method: "GET" | "POST" | "PUT" | "DELETE"
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 ): Promise<NextResponse> {
   const base = resolveOrinketBackendOrigin()
   if (!base) {
