@@ -25,24 +25,48 @@ if (process.env.TRUST_PROXY === '1' || process.env.TRUST_PROXY === 'true') {
 }
 
 // Enable CORS at the very top (comma-separated FRONTEND_URL; default covers common CRA ports)
-const defaultDevOrigins = 'http://localhost:3000,http://localhost:3001,http://localhost:4000';
-const allowedOrigins = (process.env.FRONTEND_URL || defaultDevOrigins)
+const defaultDevOrigins = [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:4000',
+    'http://localhost:4002',
+];
+
+const envOrigins = (process.env.FRONTEND_URL || '')
     .split(',')
     .map((o) => o.trim())
     .filter(Boolean);
 
+const isAllowedOrigin = (origin) => {
+    if (!origin) return true;
+    if (defaultDevOrigins.includes(origin) || envOrigins.includes(origin)) return true;
+    try {
+        const url = new URL(origin);
+        // Allow all Vercel deployments (storefront, admin, preview branches)
+        if (url.hostname.endsWith('.vercel.app')) return true;
+        if (url.hostname === 'localhost' || url.hostname === '127.0.0.1') return true;
+    } catch {
+        // invalid URL
+    }
+    return false;
+};
+
 const corsOptions = {
     origin(origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
+        if (isAllowedOrigin(origin)) {
             callback(null, true);
         } else {
             callback(null, false);
         }
     },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Cookie', 'x-session-id'],
     optionsSuccessStatus: 200
 };
+
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // Set security headers
 app.use(helmet({
