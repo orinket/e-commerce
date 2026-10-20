@@ -96,35 +96,62 @@ app.use('/api', limiter);
 app.use('/api/auth/login', authLimiter);
 app.use('/api/auth/signup', authLimiter);
 
+// Database connection with serverless caching
+let cachedPromise = null;
+const connectDB = async () => {
+    if (mongoose.connection.readyState >= 1) {
+        return;
+    }
+    if (!cachedPromise) {
+        const uri = process.env.MONGO_URI;
+        if (!uri) {
+            throw new Error('MONGO_URI environment variable is not defined in Vercel settings');
+        }
+        cachedPromise = mongoose.connect(uri, {
+            serverSelectionTimeoutMS: 5000,
+        }).then((conn) => {
+            console.log('MongoDB connected successfully');
+            return conn;
+        }).catch((err) => {
+            cachedPromise = null;
+            console.error(`MongoDB Error: ${err.message}`);
+            throw err;
+        });
+    }
+    return cachedPromise;
+};
+
+// Health check route (does not require DB)
+app.get('/health', (req, res) => {
+    res.status(200).json({ 
+        status: 'OK', 
+        message: 'Backend is running',
+        dbConnected: mongoose.connection.readyState >= 1,
+        hasMongoUri: Boolean(process.env.MONGO_URI)
+    });
+});
+
+// Middleware to ensure DB connection before handling API requests
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        console.error('Database connection failed:', err.message);
+        return res.status(500).json({
+            success: false,
+            message: 'Database Connection Error',
+            error: err.message,
+            hint: !process.env.MONGO_URI ? 'MONGO_URI environment variable is missing in Vercel' : undefined,
+        });
+    }
+});
+
 // Mount router
 app.use('/api', router);
 
 // Error handler (must be after router)
 app.use(errorHandler);
-
-// Health check route
-app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'OK', message: 'Backend is running' });
-});
-
-// Database connection with serverless caching
-let isConnected = false;
-const connectDB = async () => {
-    if (isConnected) return;
-    try {
-        const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/common-project');
-        isConnected = !!conn.connections[0].readyState;
-        console.log('MongoDB connected successfully');
-    } catch (err) {
-        console.error(`MongoDB Error: ${err.message}`);
-    }
-};
-
-// Middleware to ensure DB connection before handling requests on serverless
-app.use(async (req, res, next) => {
-    await connectDB();
-    next();
-});
 
 // Only start background jobs and WebSockets in persistent environments (local / Railway)
 if (!process.env.VERCEL) {
