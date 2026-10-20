@@ -112,9 +112,7 @@ let isConnected = false;
 const connectDB = async () => {
     if (isConnected) return;
     try {
-        const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/common-project', {
-            bufferCommands: false, // Return fast if connection drops
-        });
+        const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/common-project');
         isConnected = !!conn.connections[0].readyState;
         console.log('MongoDB connected successfully');
     } catch (err) {
@@ -130,23 +128,25 @@ app.use(async (req, res, next) => {
 
 // Only start background jobs and WebSockets in persistent environments (local / Railway)
 if (!process.env.VERCEL) {
-    connectDB();
-    startEcomJobs();
+    (async () => {
+        await connectDB();
+        startEcomJobs();
 
-    const PORT = process.env.PORT || 5002;
-    const server = app.listen(PORT, () => {
-        console.log(`Server started successfully on port ${PORT}`);
-        console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-        
-        const wsInitialized = webSocketServer.initialize(server);
-        if (wsInitialized) console.log('WebSocket server initialized successfully');
-    });
+        const PORT = process.env.PORT || 5002;
+        const server = app.listen(PORT, () => {
+            console.log(`Server started successfully on port ${PORT}`);
+            console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+            
+            const wsInitialized = webSocketServer.initialize(server);
+            if (wsInitialized) console.log('WebSocket server initialized successfully');
+        });
 
-    server.on('error', (err) => {
-        if (err.code === 'EADDRINUSE') {
-            console.error(`Port ${PORT} is in use.`);
-        }
-    });
+        server.on('error', (err) => {
+            if (err.code === 'EADDRINUSE') {
+                console.error(`Port ${PORT} is in use.`);
+            }
+        });
+    })();
 }
 
 // Export the Express app for Vercel Serverless Functions
