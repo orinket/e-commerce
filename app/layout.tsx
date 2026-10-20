@@ -29,6 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({}),
       next: { revalidate: 120 },
+      signal: AbortSignal.timeout(5000),
     })
     const json = (await res.json()) as {
       data?: Array<{

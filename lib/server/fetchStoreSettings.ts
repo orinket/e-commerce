@@ -11,6 +11,7 @@ export async function fetchStoreSettingsServer(): Promise<StoreSettings | null> 
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
       next: { revalidate: 120 },
+      signal: AbortSignal.timeout(5000),
     })
     const json: unknown = await res.json()
     return parseStoreSettingsPayload(json)

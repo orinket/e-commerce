@@ -45,6 +45,7 @@ async function postPublic<T>(path: string): Promise<T | null> {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
       next: { revalidate: 120 },
+      signal: AbortSignal.timeout(5000),
     })
     const json = (await res.json()) as { data?: T }
     return json?.data ?? null

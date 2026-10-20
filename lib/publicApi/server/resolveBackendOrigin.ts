@@ -12,10 +12,15 @@ export function resolveOrinketBackendOrigin(): string | null {
     process.env.ORINKET_BACKEND_URL?.trim() ||
     process.env.NEXT_PUBLIC_API_URL?.trim()
   if (raw) {
-    return normalizeBackendOrigin(raw) || null
+    const origin = normalizeBackendOrigin(raw)
+    // In Vercel build/serverless environment, localhost or 127.0.0.1 is unreachable
+    if (process.env.VERCEL && (origin.includes("localhost") || origin.includes("127.0.0.1"))) {
+      return null
+    }
+    return origin || null
   }
   if (process.env.NODE_ENV === "development") {
-    return "http://127.0.0.1:5000"
+    return "http://127.0.0.1:5002"
   }
   return null
 }
