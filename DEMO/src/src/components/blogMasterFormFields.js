@@ -1,8 +1,5 @@
 'use client';
 
-import { TagInput } from 'rsuite';
-import JoditEditorComponent from './JoditEditor';
-
 export const STATUS_OPTIONS = [
   { value: 'draft', label: 'Draft' },
   { value: 'published', label: 'Published' },

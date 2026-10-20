@@ -40,7 +40,6 @@ export function BlogMasterFormTabPanels({
   onRemoveGalleryImage,
 }) {
   const masterdata = useAppSelector((s) => s.masterdata);
-  const masterdatalist = useAppSelector((s) => s.masterdatalist);
   switch (activeTab) {
     case 0:
       return (

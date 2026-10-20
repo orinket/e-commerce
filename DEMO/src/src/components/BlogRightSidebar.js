@@ -6,7 +6,7 @@ import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { setMasterData, setMasterDataList } from '../store/reducer';
 import ModalRsuite from './modalrsuite';
 import { BLOG_FORM_TABS, BlogMasterFormTabPanels } from './BlogMasterTabPanels';
-import { PreviewPill, SectionCard } from './blogMasterFormFields';
+import { SectionCard } from './blogMasterFormFields';
 import apiService from '../utils/apiService';
 import { getCurrentState } from '../utils/reduxUtils';
 
@@ -29,7 +29,6 @@ const BlogRightSidebar = ({
 }) => {
   const dispatch = useAppDispatch();
   const masterdata = useAppSelector((s) => s.masterdata);
-  const masterdatalist = useAppSelector((s) => s.masterdatalist);
   const isEdit = Boolean(formData._id);
   const primaryLabel = saving ? 'Saving...' : isEdit ? 'Save' : 'Create';
   const [activeTab, setActiveTab] = useState(DEFAULT_BLOG_TAB_INDEX);
